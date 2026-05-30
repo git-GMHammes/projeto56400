@@ -1,0 +1,13 @@
+{
+  "name": "chat56400-ws",
+  "version": "1.0.0",
+  "description": "Servidor WebSocket para chat56400",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ws": "^8.17.1",
+    "express": "^4.19.2"
+  }
+}

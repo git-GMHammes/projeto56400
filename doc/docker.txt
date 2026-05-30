@@ -1,0 +1,220 @@
+# =============================================
+# Parar as portas
+# C:\laragon\www\php\habilidade\projeto56400
+# =============================================
+# net STOP
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+net stop W3SVC /y; net stop WAS /y; net stop HTTP /y
+
+# =============================================
+# Comando para o DOCKER
+# =============================================
+# Reiniciar o DOCKER
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+docker compose restart
+
+# =============================================
+# Comando para o DOCKER
+# =============================================
+# Reiniciar o DOCKER
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+# Docker Desktop é gerenciado pela interface gráfica ou pelo serviço do Windows
+docker compose up -d --build
+
+# =============================================
+# SCRIPT 1: INICIAR PROJETO (USO DIÁRIO)
+# =============================================
+# Use este comando para subir os containers
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+docker logout
+docker compose up -d --build
+
+# =============================================
+# SCRIPT 1B: CORRIGIR PATH CORROMPIDA + REINICIAR
+# =============================================
+# Use este comando se tiver erro com docker-compose.exe
+# FECHE e ABRA um novo PowerShell ANTES de executar
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+# 1. Parar tudo
+docker compose down
+
+# 2. Limpar a PATH corrompida
+$paths = $env:PATH -split ';' | Select-Object -Unique | Where-Object {$_ -ne ""}
+$env:PATH = $paths -join ';'
+
+# 3. Subir os containers
+docker compose up -d --build
+
+# =============================================
+# SCRIPT 2: PRIMEIRA VEZ / MÁQUINA NOVA
+# =============================================
+# Use este comando na primeira vez ou em máquina nova
+# Faz pull de TODAS as imagens necessárias primeiro
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+docker logout
+
+# Pull de todas as imagens base necessárias
+docker pull mysql:8.0
+docker pull nginx:alpine
+docker pull adminer:latest
+docker pull php:8.2-fpm
+docker pull composer:latest
+
+# Agora pode subir sem erro
+docker compose up -d --build
+
+
+# =============================================
+# SCRIPT 3: LIMPEZA COMPLETA + REINSTALAR
+# =============================================
+# ATENÇÃO: Remove TUDO e reinstala do zero
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+# Parar e remover tudo
+docker stop $(docker ps -aq)
+docker rm -f $(docker ps -aq)
+docker rmi -f $(docker images -q)
+docker volume prune -f
+docker network prune -f
+docker system prune -af --volumes
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+docker logout
+
+# Pull de todas as imagens base necessárias
+docker pull mysql:8.0
+docker pull nginx:alpine
+docker pull adminer:latest
+docker pull php:8.2-fpm
+docker pull composer:latest
+
+# Subir tudo do zero
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+docker compose up -d --build
+
+# =============================================
+# SCRIPT 3B: LIMPEZA COMPLETA + LIMPAR PATH CORROMPIDA
+# =============================================
+# Use este se tiver erro com docker-compose.exe
+# FECHE e ABRA um novo PowerShell ANTES de executar
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+# Parar e remover tudo
+docker stop $(docker ps -aq)
+docker rm -f $(docker ps -aq)
+docker rmi -f $(docker images -q)
+docker volume prune -f
+docker network prune -f
+docker system prune -af --volumes
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+docker logout
+
+# Limpar a PATH corrompida
+$paths = $env:PATH -split ';' | Select-Object -Unique | Where-Object {$_ -ne ""}
+$env:PATH = $paths -join ';'
+
+# Pull de todas as imagens base necessárias
+docker pull mysql:8.0
+docker pull nginx:alpine
+docker pull adminer:latest
+docker pull php:8.2-fpm
+docker pull composer:latest
+
+# Subir tudo do zero
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+docker compose up -d --build
+
+# =============================================
+# SCRIPT 4: PARAR CONTAINERS
+# =============================================
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+docker compose down
+
+# =============================================
+# SCRIPT 5: VER STATUS DOS CONTAINERS
+# =============================================
+
+docker ps
+
+# =============================================
+# SCRIPT 6: VER LOGS
+# =============================================
+
+# Ver logs de todos os containers
+docker compose logs
+
+# Ver logs de um container específico
+docker logs cake56100_mysql
+docker logs cake56100_php
+docker logs cake56100_nginx
+docker logs cake56100_adminer
+
+# =============================================
+# Baixar as imagens
+# =============================================
+
+# 1. Baixar as imagens
+docker pull mysql:8.0
+docker pull nginx:alpine
+docker pull adminer:latest
+docker pull php:8.2-fpm
+docker pull composer:latest
+
+# 2. Salvar cada imagem em um arquivo .tar
+clear
+cd C:\laragon\www\php\habilidade\projeto56400\doc\docker
+docker save -o mysql-8.0.tar mysql:8.0
+docker save -o nginx-alpine.tar nginx:alpine
+docker save -o adminer-latest.tar adminer:latest
+docker save -o php-8.2-fpm.tar php:8.2-fpm
+docker save -o composer-latest.tar composer:latest
+
+# =============================================
+# Se salvou separado
+# =============================================
+clear
+cd C:\laragon\www\php\habilidade\projeto56400\doc\docker
+docker load -i mysql-8.0.tar
+docker load -i nginx-alpine.tar
+docker load -i adminer-latest.tar
+docker load -i php-8.2-fpm.tar
+docker load -i composer-latest.tar
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+docker compose up -d --build
+
+# =============================================
+# Se salvou tudo em um arquivo só
+# =============================================
+
+docker load -i todas-imagens.tar

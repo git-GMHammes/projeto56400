@@ -1,0 +1,228 @@
+# =============================================
+# Parar as portas
+# C:\laragon\www\php\habilidade\projeto56400
+# =============================================
+# net STOP
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+net stop W3SVC /y; net stop WAS /y; net stop HTTP /y
+ 
+# =============================================
+# Cmando para o PODMAN
+# =============================================
+# Reiniciar o PODMAN
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+podman compose restart
+ 
+# =============================================
+# Cmando para o PODMAN
+# ============================================= 
+# Reiniciar o PODMAN
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+podman machine stop
+podman machine start
+# Instale/use o podman-compose em vez do docker-compose
+cd C:\laragon\www\php\habilidade\projeto56400
+podman compose up -d --build
+ 
+# =============================================
+# SCRIPT 1: INICIAR PROJETO (USO DIÁRIO)
+# =============================================
+# Use este comando para subir os containers
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+ 
+podman logout --all
+# Instale/use o podman-compose em vez do docker-compose
+podman compose up -d --build
+
+# =============================================
+# SCRIPT 1B: CORRIGIR PATH CORROMPIDA + REINICIAR
+# =============================================
+# Use este comando se tiver erro com docker-compose.exe
+# FECHE e ABRA um novo PowerShell ANTES de executar
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+# 1. Parar tudo
+podman compose down
+
+# 2. Limpar a PATH corrompida
+$paths = $env:PATH -split ';' | Select-Object -Unique | Where-Object {$_ -ne ""}
+$env:PATH = $paths -join ';'
+
+# 3. Subir os containers
+podman compose up -d --build
+ 
+# =============================================
+# SCRIPT 2: PRIMEIRA VEZ / MÁQUINA NOVA
+# =============================================
+# Use este comando na primeira vez ou em máquina nova
+# Faz pull de TODAS as imagens necessárias primeiro
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+podman logout --all
+
+# Pull de todas as imagens base necessárias
+podman pull docker.io/library/mysql:8.0
+podman pull docker.io/library/nginx:alpine
+podman pull docker.io/library/adminer:latest
+podman pull docker.io/library/php:8.2-fpm
+podman pull docker.io/library/composer:latest
+
+# Agora pode subir sem erro
+# Instale/use o podman-compose em vez do docker-compose
+podman compose up -d --build
+ 
+
+# =============================================
+# SCRIPT 3: LIMPEZA COMPLETA + REINSTALAR
+# =============================================
+# ATENÇÃO: Remove TUDO e reinstala do zero
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+# Parar e remover tudo
+podman stop -a
+podman rm -af
+podman pod rm -af
+podman rmi -af
+podman volume rm -af
+podman network prune -f
+podman system prune -af --volumes
+ 
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+podman logout --all
+ 
+# Pull de todas as imagens base necessárias
+podman pull docker.io/library/mysql:8.0
+podman pull docker.io/library/nginx:alpine
+podman pull docker.io/library/adminer:latest
+podman pull docker.io/library/php:8.2-fpm
+podman pull docker.io/library/composer:latest
+ 
+# Subir tudo do zero
+# Instale/use o podman-compose em vez do docker-compose
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+podman compose up -d --build
+
+# =============================================
+# SCRIPT 3B: LIMPEZA COMPLETA + LIMPAR PATH CORROMPIDA
+# =============================================
+# Use este se tiver erro com docker-compose.exe
+# FECHE e ABRA um novo PowerShell ANTES de executar
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+# Parar e remover tudo
+podman stop -a
+podman rm -af
+podman pod rm -af
+podman rmi -af
+podman volume rm -af
+podman network prune -f
+podman system prune -af --volumes
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+podman logout --all
+
+# Limpar a PATH corrompida
+$paths = $env:PATH -split ';' | Select-Object -Unique | Where-Object {$_ -ne ""}
+$env:PATH = $paths -join ';'
+ 
+# Pull de todas as imagens base necessárias
+podman pull docker.io/library/mysql:8.0
+podman pull docker.io/library/nginx:alpine
+podman pull docker.io/library/adminer:latest
+podman pull docker.io/library/php:8.2-fpm
+podman pull docker.io/library/composer:latest
+ 
+# Subir tudo do zero
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+podman compose up -d --build
+ 
+# =============================================
+# SCRIPT 4: PARAR CONTAINERS
+# =============================================
+
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+
+podman compose down
+
+# =============================================
+# SCRIPT 5: VER STATUS DOS CONTAINERS
+# =============================================
+
+podman ps
+
+# =============================================
+# SCRIPT 6: VER LOGS
+# =============================================
+
+# Ver logs de todos os containers
+podman compose logs
+
+# Ver logs de um container específico
+podman logs cake56100_mysql
+podman logs cake56100_php
+podman logs cake56100_nginx
+podman logs cake56100_adminer
+
+# =============================================
+# Baixar as imagens
+# =============================================
+
+# 1. Baixar as imagens
+podman pull docker.io/library/mysql:8.0
+podman pull docker.io/library/nginx:alpine
+podman pull docker.io/library/adminer:latest
+podman pull docker.io/library/php:8.2-fpm
+podman pull docker.io/library/composer:latest
+
+# 2. Salvar cada imagem em um arquivo .tar
+clear
+cd C:\laragon\www\php\habilidade\projeto56400\doc\podman
+podman save -o mysql-8.0.tar docker.io/library/mysql:8.0
+podman save -o nginx-alpine.tar docker.io/library/nginx:alpine
+podman save -o adminer-latest.tar docker.io/library/adminer:latest
+podman save -o php-8.2-fpm.tar docker.io/library/php:8.2-fpm
+podman save -o composer-latest.tar docker.io/library/composer:latest
+
+# =============================================
+# Se salvou separado
+# =============================================
+clear
+cd C:\laragon\www\php\habilidade\projeto56400\doc\podman
+podman load -i mysql-8.0.tar
+podman load -i nginx-alpine.tar
+podman load -i adminer-latest.tar
+podman load -i php-8.2-fpm.tar
+podman load -i composer-latest.tar
+ 
+clear
+cd C:\laragon\www\php\habilidade\projeto56400
+podman compose up -d --build
+ 
+# =============================================
+# Se salvou tudo em um arquivo só
+# =============================================
+
+podman load -i todas-imagens.tar
