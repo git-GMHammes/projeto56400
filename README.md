@@ -573,8 +573,8 @@ app/
 | **Projeto**         | Registro e Cálculo de Diárias                                                                                            |
 | **E-mail**          | [gustavo.hammes@loglabdigital.com.br](mailto:gustavo.hammes@loglabdigital.com.br)                                        |
 | **Linkedin**        | [https://www.linkedin.com/in/gustavo-hammes](https://wa.me/5521980558545)                                                                          |
-| **Stack principal** | PHP (Laravel, Symfony, Cake, Codeigniter), Java Spring Boot, JS/TS (React, Vue, Node.js), Mobile (React Native, Flutter) |
+| **Stack principal** | PHP 8.2-FPM, Node.js 20 (Express + ws), NGINX Alpine, MySQL 8.0, Docker Compose / Podman |
 
-> 🧠 *Este documento faz parte do projeto **Registro e Cálculo de Diárias** – desenvolvido por Gustavo Hammes.*
+> 🧠 *Este documento faz parte do projeto **Agente Social** – desenvolvido por Gustavo Hammes.*
 
 ---
