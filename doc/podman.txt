@@ -27,6 +27,7 @@ cd C:\laragon\www\php\habilidade\projeto56400
 podman machine stop
 podman machine start
 # Instale/use o podman-compose em vez do docker-compose
+
 cd C:\laragon\www\php\habilidade\projeto56400
 podman compose up -d --build
  
